@@ -1,25 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChevronLeft } from "lucide-react";
-
-declare global {
-  interface Window {
-    grecaptcha: {
-      ready: (callback: () => void) => void;
-      render: (container: HTMLElement, options: {
-        sitekey: string;
-        callback?: (token: string) => void;
-        'error-callback'?: () => void;
-        size?: 'normal' | 'compact';
-        theme?: 'light' | 'dark';
-      }) => number;
-      reset: (widgetId: number) => void;
-      getResponse: (widgetId: number) => string;
-    };
-  }
-}
 
 interface InputScreenProps {
   step: number;
@@ -27,7 +10,7 @@ interface InputScreenProps {
   label: string;
   type: "text" | "email";
   buttonText: string;
-  onSubmit: (value: string, recaptchaToken?: string | null) => void;
+  onSubmit: (value: string) => void;
   validator?: (value: string) => string | null;
   onBack?: () => void;
   heroImage?: string;
@@ -47,64 +30,6 @@ export const InputScreen = ({
   const [value, setValue] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [touched, setTouched] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
-  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
-  const recaptchaWidgetId = useRef<number | null>(null);
-  const recaptchaContainerRef = useRef<HTMLDivElement>(null);
-
-  // Load reCAPTCHA script for email type immediately
-  useEffect(() => {
-    if (type === "email" && !recaptchaLoaded) {
-      const script = document.createElement('script');
-      script.src = `https://www.google.com/recaptcha/api.js`;
-      script.async = true;
-      script.defer = true;
-      script.onload = () => {
-        setRecaptchaLoaded(true);
-      };
-      document.body.appendChild(script);
-    }
-  }, [type, recaptchaLoaded]);
-
-  // Render reCAPTCHA immediately for email type when script loads
-  useEffect(() => {
-    if (type !== "email" || !recaptchaContainerRef.current || !window.grecaptcha || !recaptchaLoaded) {
-      return;
-    }
-
-    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
-
-    window.grecaptcha.ready(() => {
-      if (!recaptchaContainerRef.current) return;
-
-      try {
-        // If widget already exists, just reset it
-        if (recaptchaWidgetId.current !== null) {
-          window.grecaptcha.reset(recaptchaWidgetId.current);
-          setRecaptchaToken(null);
-          return;
-        }
-
-        // Render new widget
-        const widgetId = window.grecaptcha.render(recaptchaContainerRef.current, {
-          sitekey: siteKey,
-          callback: (token: string) => {
-            console.log('reCAPTCHA token received:', token ? `${token.substring(0, 20)}...` : 'null');
-            setRecaptchaToken(token);
-          },
-          'error-callback': () => {
-            console.error('reCAPTCHA error callback triggered');
-            setRecaptchaToken(null);
-          },
-          size: 'normal',
-          theme: 'light',
-        });
-        recaptchaWidgetId.current = widgetId;
-      } catch (error) {
-        console.error('Error rendering reCAPTCHA:', error);
-      }
-    });
-  }, [type, recaptchaLoaded]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -125,39 +50,8 @@ export const InputScreen = ({
       }
     }
 
-    // For email type, check if reCAPTCHA is completed and get fresh token
-    if (type === "email") {
-      if (!recaptchaToken) {
-        setError("Please complete the reCAPTCHA verification");
-        return;
-      }
-
-      // Get fresh token right before submission (reCAPTCHA tokens can expire)
-      if (recaptchaWidgetId.current !== null && window.grecaptcha) {
-        try {
-          const freshToken = window.grecaptcha.getResponse(recaptchaWidgetId.current);
-          if (freshToken) {
-            console.log('Using fresh reCAPTCHA token for submission');
-            setError(null);
-            onSubmit(trimmedValue, freshToken);
-            return;
-          } else {
-            // Token might have expired, reset and ask user to complete again
-            setError("reCAPTCHA token expired. Please complete the verification again.");
-            window.grecaptcha.reset(recaptchaWidgetId.current);
-            setRecaptchaToken(null);
-            return;
-          }
-        } catch (error) {
-          console.error('Error getting reCAPTCHA response:', error);
-          setError("Please complete the reCAPTCHA verification");
-          return;
-        }
-      }
-    }
-
     setError(null);
-    onSubmit(trimmedValue, recaptchaToken);
+    onSubmit(trimmedValue);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -225,20 +119,9 @@ export const InputScreen = ({
               )}
             </div>
 
-            {/* reCAPTCHA Container - always shown for email type */}
-            {type === "email" && (
-              <div className="flex justify-center my-3 min-h-[78px]">
-                <div 
-                  ref={recaptchaContainerRef}
-                  id={`recaptcha-container-${step}`}
-                  className="flex justify-center scale-90 md:scale-100 origin-center"
-                />
-              </div>
-            )}
-
             <Button
               type="submit"
-              disabled={isDisabled || (type === "email" && !recaptchaToken)}
+              disabled={isDisabled}
               className="w-full h-11 md:h-12 text-sm md:text-base font-semibold rounded-full
                        bg-primary text-primary-foreground 
                        hover:opacity-90 active:scale-[0.98]

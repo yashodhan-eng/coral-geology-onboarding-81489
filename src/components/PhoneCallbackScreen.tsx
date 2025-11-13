@@ -1,10 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft } from "lucide-react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (callback: () => void) => void;
+      render: (container: HTMLElement, options: {
+        sitekey: string;
+        callback?: (token: string) => void;
+        'error-callback'?: () => void;
+        size?: 'normal' | 'compact';
+        theme?: 'light' | 'dark';
+      }) => number;
+      reset: (widgetId: number) => void;
+      getResponse: (widgetId: number) => string;
+    };
+  }
+}
 
 interface PhoneCallbackScreenProps {
   step: number;
@@ -16,7 +33,7 @@ interface PhoneCallbackScreenProps {
   buttonFilled: string;
   dayOptions: string[];
   timeOptions: string[];
-  onSubmit: (phone: string, preferredDay?: string, preferredTime?: string) => void;
+  onSubmit: (phone: string, preferredDay?: string, preferredTime?: string, recaptchaToken?: string | null) => void;
   onBack: () => void;
   heroImage?: string;
 }
@@ -39,19 +56,105 @@ export const PhoneCallbackScreen = ({
   const [preferredDay, setPreferredDay] = useState<string>("");
   const [preferredTime, setPreferredTime] = useState<string>("");
   const [touched, setTouched] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const recaptchaWidgetId = useRef<number | null>(null);
+  const recaptchaContainerRef = useRef<HTMLDivElement>(null);
+
+  // Load reCAPTCHA script immediately
+  useEffect(() => {
+    if (!recaptchaLoaded) {
+      const script = document.createElement('script');
+      script.src = `https://www.google.com/recaptcha/api.js`;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        setRecaptchaLoaded(true);
+      };
+      document.body.appendChild(script);
+    }
+  }, [recaptchaLoaded]);
+
+  // Render reCAPTCHA when script loads
+  useEffect(() => {
+    if (!recaptchaContainerRef.current || !window.grecaptcha || !recaptchaLoaded) {
+      return;
+    }
+
+    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+
+    window.grecaptcha.ready(() => {
+      if (!recaptchaContainerRef.current) return;
+
+      try {
+        // If widget already exists, just reset it
+        if (recaptchaWidgetId.current !== null) {
+          window.grecaptcha.reset(recaptchaWidgetId.current);
+          setRecaptchaToken(null);
+          return;
+        }
+
+        // Render new widget
+        const widgetId = window.grecaptcha.render(recaptchaContainerRef.current, {
+          sitekey: siteKey,
+          callback: (token: string) => {
+            console.log('reCAPTCHA token received:', token ? `${token.substring(0, 20)}...` : 'null');
+            setRecaptchaToken(token);
+            setError(null);
+          },
+          'error-callback': () => {
+            console.error('reCAPTCHA error callback triggered');
+            setRecaptchaToken(null);
+          },
+          size: 'normal',
+          theme: 'light',
+        });
+        recaptchaWidgetId.current = widgetId;
+      } catch (error) {
+        console.error('Error rendering reCAPTCHA:', error);
+      }
+    });
+  }, [recaptchaLoaded]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
     
-    // Allow skipping if no phone entered
-    if (!phone) {
-      onSubmit("", undefined, undefined);
+    // Check reCAPTCHA before allowing submission
+    if (!recaptchaToken) {
+      setError("Please complete the reCAPTCHA verification");
       return;
     }
-    
-    // Submit with phone and preferences
-    onSubmit(phone, preferredDay, preferredTime);
+
+    // Get fresh token right before submission (reCAPTCHA tokens can expire)
+    if (recaptchaWidgetId.current !== null && window.grecaptcha) {
+      try {
+        const freshToken = window.grecaptcha.getResponse(recaptchaWidgetId.current);
+        if (freshToken) {
+          console.log('Using fresh reCAPTCHA token for submission');
+          setError(null);
+          // Allow skipping if no phone entered
+          if (!phone) {
+            onSubmit("", undefined, undefined, freshToken);
+            return;
+          }
+          // Submit with phone and preferences
+          onSubmit(phone, preferredDay, preferredTime, freshToken);
+          return;
+        } else {
+          // Token might have expired, reset and ask user to complete again
+          setError("reCAPTCHA token expired. Please complete the verification again.");
+          window.grecaptcha.reset(recaptchaWidgetId.current);
+          setRecaptchaToken(null);
+          return;
+        }
+      } catch (error) {
+        console.error('Error getting reCAPTCHA response:', error);
+        setError("Please complete the reCAPTCHA verification");
+        return;
+      }
+    }
   };
 
   const hasPhone = phone && phone.length > 0;
@@ -135,6 +238,21 @@ export const PhoneCallbackScreen = ({
             )}
           </div>
 
+          {/* reCAPTCHA Container */}
+          <div className="flex justify-center my-3 min-h-[78px]">
+            <div 
+              ref={recaptchaContainerRef}
+              id={`recaptcha-container-${step}`}
+              className="inline-block"
+            />
+          </div>
+
+          {error && (
+            <p className="text-sm text-destructive text-center px-2">
+              {error}
+            </p>
+          )}
+
           <div className="flex items-center justify-between pt-4">
             <Button
               type="button"
@@ -145,7 +263,11 @@ export const PhoneCallbackScreen = ({
               <ArrowLeft className="w-4 h-4" />
               Back
             </Button>
-            <Button type="submit" size="lg">
+            <Button 
+              type="submit" 
+              size="lg"
+              disabled={!recaptchaToken}
+            >
               {hasPhone ? buttonFilled : buttonEmpty}
             </Button>
           </div>
