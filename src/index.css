@@ -71,3 +71,46 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Phone input custom styles */
+.PhoneInput {
+  display: flex;
+  align-items: center;
+}
+
+.PhoneInputInput {
+  flex: 1;
+  outline: none;
+  border: none;
+  background: transparent;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.PhoneInputCountry {
+  margin-right: 0.5rem;
+}
+
+.PhoneInputCountrySelect {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.PhoneInputCountryIcon {
+  width: 1.25rem;
+  height: 1rem;
+  margin-right: 0.25rem;
+}
+
+.PhoneInputCountrySelectArrow {
+  width: 0.3em;
+  height: 0.3em;
+  margin-left: 0.25rem;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0.45;
+}

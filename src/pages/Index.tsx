@@ -4,6 +4,7 @@ import { LandingScreen } from "@/components/LandingScreen";
 import { QuestionScreen } from "@/components/QuestionScreen";
 import { MultiSelectScreen } from "@/components/MultiSelectScreen";
 import { InputScreen } from "@/components/InputScreen";
+import { PhoneCallbackScreen } from "@/components/PhoneCallbackScreen";
 import { ThankYouScreen } from "@/components/ThankYouScreen";
 import { BackgroundTheme } from "@/components/BackgroundTheme";
 import { contentSchema, OnboardingAnswers } from "@/data/contentSchema";
@@ -99,9 +100,21 @@ const Index = () => {
   };
 
   const handleEmailSubmit = async (email: string, recaptchaToken?: string | null) => {
-    const finalAnswers = { 
+    const newAnswers = { 
       ...answers, 
       email,
+      recaptchaToken
+    };
+    setAnswers(newAnswers);
+    setCurrentStep(5);
+  };
+
+  const handlePhoneSubmit = async (phone: string, preferredDay?: string, preferredTime?: string) => {
+    const finalAnswers = { 
+      ...answers, 
+      phone: phone || undefined,
+      preferredDay: preferredDay || undefined,
+      preferredTime: preferredTime || undefined,
       timestamp: Date.now()
     };
     setAnswers(finalAnswers);
@@ -112,8 +125,8 @@ const Index = () => {
     // Submit to backend API
     setIsSubmitting(true);
     try {
-      await submitToBackend(finalAnswers, recaptchaToken);
-      const response = await adCampaignService.signin({ email, recaptchaToken });
+      await submitToBackend(finalAnswers, answers.recaptchaToken);
+      const response = await adCampaignService.signin({ email: finalAnswers.email, recaptchaToken: answers.recaptchaToken });
       console.log('Signin response:', response);
       const navlink = response.magicLink || response.magic_link;
       if (navlink) {
@@ -213,7 +226,7 @@ const Index = () => {
       {currentStep > 0 && (
         <TopNav 
           currentStep={currentStep} 
-          totalSteps={4}
+          totalSteps={5}
         />
       )}
 
@@ -292,6 +305,23 @@ const Index = () => {
             buttonText={contentSchema.email.button}
             onSubmit={handleEmailSubmit}
             validator={emailValidator}
+            onBack={handleBack}
+            heroImage={screen5Hero}
+          />
+        )}
+
+        {currentStep === 5 && (
+          <PhoneCallbackScreen
+            step={5}
+            title={contentSchema.phone.title}
+            label={contentSchema.phone.label}
+            dayLabel={contentSchema.phone.dayLabel}
+            timeLabel={contentSchema.phone.timeLabel}
+            buttonEmpty={contentSchema.phone.buttonEmpty}
+            buttonFilled={contentSchema.phone.buttonFilled}
+            dayOptions={contentSchema.phone.dayOptions}
+            timeOptions={contentSchema.phone.timeOptions}
+            onSubmit={handlePhoneSubmit}
             onBack={handleBack}
             heroImage={screen5Hero}
           />
