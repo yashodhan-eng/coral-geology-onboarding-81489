@@ -52,7 +52,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
         <div className="animate-fade-in">
           <div className="w-full max-w-[900px] mx-auto px-6 md:px-10 lg:px-20">
             {/* Ages Tag - Moved Above Title */}
-            <div className="text-center mb-2.5 md:mb-4">
+            <div className="text-center mb-4 md:mb-6">
               <div className="inline-block bg-[#FFF1EC] border border-primary rounded-full px-3 md:px-[14px] py-1 md:py-[6px]">
                 <span className="font-poppins font-medium text-[13px] md:text-[14px] text-primary">
                   Ages 8–13
@@ -61,11 +61,11 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
             </div>
 
             {/* Title Section */}
-            <div className="text-center mb-3 md:mb-6">
-              <h1 className="font-poppins font-semibold text-[24px] md:text-[32px] lg:text-[36px] text-foreground mb-2.5 md:mb-3 tracking-tight leading-tight">
+            <div className="text-center mb-4 md:mb-6">
+              <h1 className="font-poppins font-semibold text-[24px] md:text-[32px] lg:text-[36px] text-foreground leading-[1.2]">
                 Geology Adventures
               </h1>
-              <p className="font-poppins text-[18px] md:text-[20px] text-foreground font-semibold mb-2">
+              <p className="font-poppins text-[24px] md:text-[32px] lg:text-[36px] text-foreground font-semibold leading-[1.2] mb-4 md:mb-5">
                 Discover Earth's Deep Secrets
               </p>
               <p className="font-poppins text-[14px] md:text-[18px] text-secondary font-medium tracking-wide">
