@@ -305,7 +305,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
 
                       {/* Quote */}
                       <p className="font-poppins text-[15px] text-foreground leading-relaxed mb-4">
-                        "Into the Wild was the highlight of our week — educational and exciting!"
+                        "Geology Adventures was the highlight of our week — educational and exciting!"
                       </p>
 
                       {/* Parent Info */}
