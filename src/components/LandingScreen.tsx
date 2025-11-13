@@ -1,5 +1,5 @@
 import coralLogo from "@/assets/coral-academy-logo.png";
-import heroImage from "@/assets/reptiles-hero.webp";
+import heroImage from "@/assets/geology-class-preview.jpg";
 import { Mountain, Waves, Bone, FlaskConical, ChevronDown, Calendar, PlayCircle, MapPin, Star, Award, Users, GraduationCap } from "lucide-react";
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -607,7 +607,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
               <div className="relative group cursor-pointer" onClick={() => setShowVideo(true)}>
                 <img 
                   src={heroImage} 
-                  alt="Into the Wild Class Preview" 
+                  alt="Geology Adventures Class Preview" 
                   className="w-full h-auto rounded-2xl border-4 border-white shadow-[0_12px_40px_rgba(0,0,0,0.12),0_4px_12px_rgba(0,0,0,0.08)]"
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
