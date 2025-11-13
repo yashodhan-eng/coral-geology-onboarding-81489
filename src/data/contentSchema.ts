@@ -33,7 +33,27 @@ export const contentSchema = {
   email: {
     title: "Kindly share your email address",
     label: "Enter your email",
-    button: "Submit"
+    button: "Next"
+  },
+  phone: {
+    title: "Would you like a callback?",
+    label: "Enter your phone number",
+    dayLabel: "Preferred day",
+    timeLabel: "Preferred time",
+    buttonEmpty: "Skip and Submit",
+    buttonFilled: "Submit",
+    dayOptions: [
+      "Weekday",
+      "Weekend",
+      "Any day"
+    ],
+    timeOptions: [
+      "11 AM – 1 PM",
+      "1 PM – 3 PM",
+      "3 PM – 5 PM",
+      "5 PM – 7 PM",
+      "7 PM – 9 PM"
+    ]
   },
   thankyou: {
     title: "Thanks! You're all set.",
@@ -47,5 +67,9 @@ export type OnboardingAnswers = {
   q2?: string;
   name?: string;
   email?: string;
+  phone?: string;
+  preferredDay?: string;
+  preferredTime?: string;
+  recaptchaToken?: string | null;
   timestamp?: number;
 };
