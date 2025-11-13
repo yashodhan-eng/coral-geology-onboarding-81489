@@ -1,5 +1,5 @@
 export const contentSchema = {
-  redirectUrl: "https://www.coralacademy.com/class/scalesandslime-d8a4adf3-941f-4944-b278-378544601ecc",
+  redirectUrl: "https://www.coralacademy.com/class/geology-adventures-discover-earths-deep-secrets",
   logoSrc: "/src/assets/coral-academy-logo.png",
   q1: {
     title: "How soon are you looking to try our free classes?",

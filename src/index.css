@@ -20,13 +20,13 @@ All colors MUST be HSL.
     --primary: 12 88% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 152 35% 50%;
+    --secondary: 30 45% 50%;
     --secondary-foreground: 0 0% 100%;
 
     --muted: 138 30% 90%;
     --muted-foreground: 0 0% 45%;
 
-    --accent: 135 42% 35%;
+    --accent: 25 50% 40%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -38,10 +38,10 @@ All colors MUST be HSL.
 
     --radius: 9999px;
 
-    /* Coral Academy brand colors - Reptiles theme */
+    /* Coral Academy brand colors - Geology theme */
     --coral: 12 88% 55%;
-    --deep-leaf-green: 135 42% 35%;
-    --soft-moss: 135 30% 70%;
+    --deep-earth-brown: 25 50% 40%;
+    --soft-earth: 30 35% 70%;
     --nature-bg: 138 45% 97%;
     --text-dark: 0 0% 10%;
     

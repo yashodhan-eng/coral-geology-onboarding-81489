@@ -1,6 +1,6 @@
 import coralLogo from "@/assets/coral-academy-logo.png";
 import heroImage from "@/assets/reptiles-hero.webp";
-import { Bug, Droplets, Microscope, Globe, ChevronDown, Calendar, PlayCircle, MapPin, Star, Award, Users, GraduationCap } from "lucide-react";
+import { Mountain, Waves, Bone, FlaskConical, ChevronDown, Calendar, PlayCircle, MapPin, Star, Award, Users, GraduationCap } from "lucide-react";
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
@@ -63,10 +63,13 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
             {/* Title Section */}
             <div className="text-center mb-3 md:mb-6">
               <h1 className="font-poppins font-semibold text-[24px] md:text-[32px] lg:text-[36px] text-foreground mb-2.5 md:mb-3 tracking-tight leading-tight">
-                Into the Wild: Exploring Reptiles & Amphibians
+                Geology Adventures
               </h1>
+              <p className="font-poppins text-[18px] md:text-[20px] text-foreground font-semibold mb-2">
+                Discover Earth's Deep Secrets
+              </p>
               <p className="font-poppins text-[14px] md:text-[18px] text-secondary font-medium tracking-wide">
-                Live, weekly, science classes with real reptiles & amphibians
+                Live, weekly classes where kids explore the wonders of Earth.
               </p>
             </div>
 
@@ -105,22 +108,22 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
 
                       {/* Quote */}
                       <p className="font-poppins text-[15px] text-foreground leading-relaxed mb-4">
-                        "My daughter can't stop talking about the geckos and reptiles she saw in class!"
+                        My daughter loved showing her rock collection during class.
                       </p>
 
                       {/* Parent Info */}
                       <div className="flex items-center gap-3">
                         <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
                           <span className="font-poppins font-semibold text-[14px] text-white">
-                            J
+                            E
                           </span>
                         </div>
                         <div>
                           <p className="font-poppins font-medium text-[13px] text-[#333333]">
-                            Jennifer
+                            Emily
                           </p>
                           <p className="font-poppins text-[13px] text-[#777777]">
-                            California
+                            Oregon
                           </p>
                         </div>
                       </div>
@@ -145,7 +148,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
 
                       {/* Quote */}
                       <p className="font-poppins text-[15px] text-foreground leading-relaxed mb-4">
-                        "This class brought science to life — she looks forward to it every week."
+                        The geology activities make science feel real and fun.
                       </p>
 
                       {/* Parent Info */}
@@ -177,46 +180,6 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                     >
                       {/* Star Rating */}
                       <div className="flex items-center gap-1 mb-3">
-                        {[1, 2, 3, 4].map((star) => (
-                          <Star key={star} className="w-4 h-4 fill-primary text-primary" strokeWidth={0} />
-                        ))}
-                        <Star className="w-4 h-4 fill-[#E6E6E6] text-[#E6E6E6]" strokeWidth={0} />
-                      </div>
-
-                      {/* Quote */}
-                      <p className="font-poppins text-[15px] text-foreground leading-relaxed mb-4">
-                        "Great mix of learning and fun. My son now knows the difference between reptiles and amphibians!"
-                      </p>
-
-                      {/* Parent Info */}
-                      <div className="flex items-center gap-3">
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                          <span className="font-poppins font-semibold text-[14px] text-white">
-                            O
-                          </span>
-                        </div>
-                        <div>
-                          <p className="font-poppins font-medium text-[13px] text-[#333333]">
-                            Olivia
-                          </p>
-                          <p className="font-poppins text-[13px] text-[#777777]">
-                            Florida
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </CarouselItem>
-
-                  {/* Testimonial 4 */}
-                  <CarouselItem>
-                    <div 
-                      className="bg-white rounded-xl p-4 md:p-6 border border-[#E6E6E6]"
-                      style={{
-                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-                      }}
-                    >
-                      {/* Star Rating */}
-                      <div className="flex items-center gap-1 mb-3">
                         {[1, 2, 3, 4, 5].map((star) => (
                           <Star key={star} className="w-4 h-4 fill-primary text-primary" strokeWidth={0} />
                         ))}
@@ -224,7 +187,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
 
                       {/* Quote */}
                       <p className="font-poppins text-[15px] text-foreground leading-relaxed mb-4">
-                        "The teacher made reptiles fascinating — my kid even shared facts at dinner."
+                        A perfect blend of science and creativity. She looks forward to every single class.
                       </p>
 
                       {/* Parent Info */}
@@ -239,14 +202,14 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                             Priya
                           </p>
                           <p className="font-poppins text-[13px] text-[#777777]">
-                            New York
+                            New Jersey
                           </p>
                         </div>
                       </div>
                     </div>
                   </CarouselItem>
 
-                  {/* Testimonial 5 */}
+                  {/* Testimonial 4 */}
                   <CarouselItem>
                     <div 
                       className="bg-white rounded-xl p-4 md:p-6 border border-[#E6E6E6]"
@@ -264,19 +227,58 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
 
                       {/* Quote */}
                       <p className="font-poppins text-[15px] text-foreground leading-relaxed mb-4">
-                        "Seeing live reptiles during class kept my child completely engaged."
+                        They make topics like fossils and volcanoes exciting and easy to understand.
                       </p>
 
                       {/* Parent Info */}
                       <div className="flex items-center gap-3">
                         <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
                           <span className="font-poppins font-semibold text-[14px] text-white">
-                            E
+                            S
                           </span>
                         </div>
                         <div>
                           <p className="font-poppins font-medium text-[13px] text-[#333333]">
-                            Ethan
+                            Sarah
+                          </p>
+                          <p className="font-poppins text-[13px] text-[#777777]">
+                            California
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+
+                  {/* Testimonial 5 */}
+                  <CarouselItem>
+                    <div 
+                      className="bg-white rounded-xl p-4 md:p-6 border border-[#E6E6E6]"
+                      style={{
+                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
+                      }}
+                    >
+                      {/* Star Rating */}
+                      <div className="flex items-center gap-1 mb-3">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star key={star} className="w-4 h-4 fill-primary text-primary" strokeWidth={0} />
+                        ))}
+                      </div>
+
+                      {/* Quote */}
+                      <p className="font-poppins text-[15px] text-foreground leading-relaxed mb-4">
+                        Engaging hands on sessions that make science come alive.
+                      </p>
+
+                      {/* Parent Info */}
+                      <div className="flex items-center gap-3">
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
+                          <span className="font-poppins font-semibold text-[14px] text-white">
+                            D
+                          </span>
+                        </div>
+                        <div>
+                          <p className="font-poppins font-medium text-[13px] text-[#333333]">
+                            Daniel
                           </p>
                           <p className="font-poppins text-[13px] text-[#777777]">
                             Washington
@@ -456,35 +458,35 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
             {/* Learning Outcomes Section */}
             <div className="mb-10 md:mb-12">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-[700px] mx-auto">
-                {/* Learn About Real Reptiles */}
+                {/* Learn About Rocks and Minerals */}
                 <div className="bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.05)] p-3 md:p-4 flex flex-col items-center justify-center text-center">
-                  <Bug className="w-6 h-6 text-accent mb-2" strokeWidth={2} />
+                  <Mountain className="w-6 h-6 text-primary mb-2" strokeWidth={2} />
                   <p className="font-poppins font-medium text-[13px] md:text-[14px] text-foreground">
-                    Learn About Real Reptiles
+                    Learn About Rocks and Minerals
                   </p>
                 </div>
                 
-                {/* Explore Amphibians Up Close */}
+                {/* Explore Volcanoes and Landforms */}
                 <div className="bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.05)] p-3 md:p-4 flex flex-col items-center justify-center text-center">
-                  <Droplets className="w-6 h-6 text-secondary mb-2" strokeWidth={2} />
+                  <Waves className="w-6 h-6 text-accent mb-2" strokeWidth={2} />
                   <p className="font-poppins font-medium text-[13px] md:text-[14px] text-foreground">
-                    Explore Amphibians Up Close
+                    Explore Volcanoes and Landforms
                   </p>
                 </div>
                 
-                {/* Discover Unique Animal Facts */}
+                {/* Discover Fossils and Prehistoric Life */}
                 <div className="bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.05)] p-3 md:p-4 flex flex-col items-center justify-center text-center">
-                  <Microscope className="w-6 h-6 text-primary mb-2" strokeWidth={2} />
+                  <Bone className="w-6 h-6 text-secondary mb-2" strokeWidth={2} />
                   <p className="font-poppins font-medium text-[13px] md:text-[14px] text-foreground">
-                    Discover Unique Animal Facts
+                    Discover Fossils and Prehistoric Life
                   </p>
                 </div>
                 
-                {/* Travel Virtually to Wild Places */}
+                {/* Do Science Experiments and Creative Projects */}
                 <div className="bg-white rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.05)] p-3 md:p-4 flex flex-col items-center justify-center text-center">
-                  <Globe className="w-6 h-6 text-accent mb-2" strokeWidth={2} />
+                  <FlaskConical className="w-6 h-6 text-primary mb-2" strokeWidth={2} />
                   <p className="font-poppins font-medium text-[13px] md:text-[14px] text-foreground">
-                    Travel Virtually to Wild Places
+                    Do Science Experiments and Creative Projects
                   </p>
                 </div>
               </div>
@@ -526,10 +528,10 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                       </div>
                       <div className="flex-1">
                         <h4 className="font-poppins font-semibold text-[15px] md:text-[16px] text-foreground mb-1">
-                          The Philippines
+                          Plate Tectonics and Seismology
                         </h4>
                         <p className="font-poppins text-[14px] md:text-[15px] text-secondary">
-                          Flying lizards & rare island species
+                          Explore how the Earth's crust moves and why earthquakes happen.
                         </p>
                       </div>
                     </div>
@@ -543,10 +545,10 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                       </div>
                       <div className="flex-1">
                         <h4 className="font-poppins font-semibold text-[15px] md:text-[16px] text-foreground mb-1">
-                          Tasmania
+                          The Shapes of Landforms
                         </h4>
                         <p className="font-poppins text-[14px] md:text-[15px] text-secondary">
-                          Native amphibians from a unique ecosystem
+                          Learn how mountains, rivers, and valleys form over time.
                         </p>
                       </div>
                     </div>
@@ -560,10 +562,27 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                       </div>
                       <div className="flex-1">
                         <h4 className="font-poppins font-semibold text-[15px] md:text-[16px] text-foreground mb-1">
-                          New Zealand
+                          Speleology
                         </h4>
                         <p className="font-poppins text-[14px] md:text-[15px] text-secondary">
-                          Ancient reptiles like the tuatara & their island adaptations
+                          Discover the science of caves and underground formations.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Week 4 */}
+                    <div className="flex gap-4">
+                      <div className="flex-shrink-0 w-20">
+                        <span className="font-poppins font-semibold text-[15px] text-primary">
+                          Week 4
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-poppins font-semibold text-[15px] md:text-[16px] text-foreground mb-1">
+                          Ask a Geologist
+                        </h4>
+                        <p className="font-poppins text-[14px] md:text-[15px] text-secondary">
+                          Join a real time session with a geologist and explore your questions.
                         </p>
                       </div>
                     </div>
@@ -580,7 +599,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                   A Sneak Peek of Our Class
                 </h2>
                 <p className="font-inter text-[15px] text-accent">
-                  See what makes each session fun, interactive, and full of discovery
+                  See how kids explore rocks, crystals, fossils, and Earth science through fun hands-on activities.
                 </p>
               </div>
 
