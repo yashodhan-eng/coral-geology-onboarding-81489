@@ -99,22 +99,22 @@ const Index = () => {
     setCurrentStep(4);
   };
 
-  const handleEmailSubmit = async (email: string, recaptchaToken?: string | null) => {
+  const handleEmailSubmit = async (email: string) => {
     const newAnswers = { 
       ...answers, 
-      email,
-      recaptchaToken
+      email
     };
     setAnswers(newAnswers);
     setCurrentStep(5);
   };
 
-  const handlePhoneSubmit = async (phone: string, preferredDay?: string, preferredTime?: string) => {
+  const handlePhoneSubmit = async (phone: string, preferredDay?: string, preferredTime?: string, recaptchaToken?: string | null) => {
     const finalAnswers = { 
       ...answers, 
       phone: phone || undefined,
       preferredDay: preferredDay || undefined,
       preferredTime: preferredTime || undefined,
+      recaptchaToken,
       timestamp: Date.now()
     };
     setAnswers(finalAnswers);
@@ -125,8 +125,8 @@ const Index = () => {
     // Submit to backend API
     setIsSubmitting(true);
     try {
-      await submitToBackend(finalAnswers, answers.recaptchaToken);
-      const response = await adCampaignService.signin({ email: finalAnswers.email, recaptchaToken: answers.recaptchaToken });
+      await submitToBackend(finalAnswers, recaptchaToken);
+      const response = await adCampaignService.signin({ email: finalAnswers.email, recaptchaToken });
       console.log('Signin response:', response);
       const navlink = response.magicLink || response.magic_link;
       if (navlink) {
