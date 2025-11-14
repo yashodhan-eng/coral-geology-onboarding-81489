@@ -362,7 +362,9 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                   Weekly batches
                 </p>
                 <p className="font-inter text-[13px] md:text-[14px] text-primary font-semibold">
-                  Mon 10:00 AM PST & 3:00 PM PST, Tue 1:00 PM PST
+                  Mon 10:00 AM & 3:00 PM PST,{" "}
+                  <br className="md:hidden" />
+                  Tue 1:00 PM PST
                 </p>
               </div>
             </div>
