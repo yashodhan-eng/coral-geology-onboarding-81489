@@ -22,6 +22,18 @@ export const MultiSelectScreen = ({
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const toggleOption = (option: string) => {
+    const isSelected = selectedOptions.includes(option);
+    
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: isSelected ? 'Geology_onboarding_multiselect_deselect' : 'Geology_onboarding_multiselect_select',
+      element_type: 'multiselect_option',
+      step_number: step,
+      question_title: title,
+      selected_option: option,
+      total_selected: isSelected ? selectedOptions.length - 1 : selectedOptions.length + 1
+    });
+    
     setSelectedOptions(prev => 
       prev.includes(option) 
         ? prev.filter(o => o !== option)
@@ -31,15 +43,35 @@ export const MultiSelectScreen = ({
 
   const handleSubmit = () => {
     if (selectedOptions.length > 0) {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: 'Geology_onboarding_multiselect_submit',
+        element_type: 'button',
+        step_number: step,
+        question_title: title,
+        selected_options: selectedOptions.join(', '),
+        total_selected: selectedOptions.length
+      });
       onSubmit(selectedOptions);
     }
+  };
+
+  const handleBackClick = () => {
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_back_button',
+      element_type: 'button',
+      step_number: step,
+      page_section: 'multiselect_screen'
+    });
+    onBack?.();
   };
 
   return (
     <div className="flex flex-col items-center justify-start min-h-[50vh] px-4 animate-fade-in pt-2">
       {onBack && (
         <button
-          onClick={onBack}
+          onClick={handleBackClick}
           className="fixed top-[3.75rem] left-4 z-10 p-2 rounded-full hover:bg-accent transition-colors"
           aria-label="Go back"
         >

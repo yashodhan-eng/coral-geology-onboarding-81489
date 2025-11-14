@@ -50,6 +50,16 @@ export const InputScreen = ({
       }
     }
 
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_input_submit',
+      element_type: 'input_field',
+      step_number: step,
+      input_label: label,
+      input_type: type,
+      button_text: buttonText
+    });
+
     setError(null);
     onSubmit(trimmedValue);
   };
@@ -59,6 +69,28 @@ export const InputScreen = ({
     if (touched) {
       setError(null);
     }
+  };
+
+  const handleFocus = () => {
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_input_focus',
+      element_type: 'input_field',
+      step_number: step,
+      input_label: label,
+      input_type: type
+    });
+  };
+
+  const handleBackClick = () => {
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_back_button',
+      element_type: 'button',
+      step_number: step,
+      page_section: 'input_screen'
+    });
+    onBack?.();
   };
 
   const isDisabled = !value.trim();
@@ -82,7 +114,7 @@ export const InputScreen = ({
       <div className="flex flex-col items-center justify-center px-4">
         {onBack && (
           <button
-            onClick={onBack}
+            onClick={handleBackClick}
             className="fixed top-[3.75rem] left-4 z-10 p-2 rounded-full hover:bg-accent transition-colors"
             aria-label="Go back"
           >
@@ -106,6 +138,7 @@ export const InputScreen = ({
                 type={type}
                 value={value}
                 onChange={handleChange}
+                onFocus={handleFocus}
                 onBlur={() => setTouched(true)}
                 className="h-12 md:h-13 text-sm md:text-base rounded-full px-5 bg-white border border-gray-300
                          focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
