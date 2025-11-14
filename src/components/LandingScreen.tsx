@@ -357,12 +357,12 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
 
             {/* Schedule Block */}
             <div className="text-center mb-2.5 md:mb-4 px-4">
-              <div className="inline-block bg-primary/10 border border-primary/20 rounded-full px-4 md:px-5 py-2 md:py-2.5 backdrop-blur-sm">
+              <div className="inline-block bg-white rounded-lg border border-border px-4 md:px-6 py-2.5 md:py-3 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
                 <p className="font-inter text-[10px] md:text-[11px] text-muted-foreground uppercase tracking-wide mb-0.5">
                   Weekly batches
                 </p>
                 <p className="font-inter text-[13px] md:text-[14px] text-primary font-semibold">
-                  Mon 3:00 PM PST · Tue 1:00 PM PST
+                  Mon 10:00 AM PST & 3:00 PM PST, Tue 1:00 PM PST
                 </p>
               </div>
             </div>
