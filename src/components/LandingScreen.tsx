@@ -533,10 +533,10 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                       </div>
                       <div className="flex-1">
                         <h4 className="font-poppins font-semibold text-[15px] md:text-[16px] text-foreground mb-1">
-                          Plate Tectonics and Seismology
+                          Mineral Testing
                         </h4>
                         <p className="font-poppins text-[14px] md:text-[15px] text-secondary">
-                          Explore how the Earth's crust moves and why earthquakes happen.
+                          Discover how geologists identify minerals using a variety of tests.
                         </p>
                       </div>
                     </div>
@@ -550,10 +550,10 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                       </div>
                       <div className="flex-1">
                         <h4 className="font-poppins font-semibold text-[15px] md:text-[16px] text-foreground mb-1">
-                          The Shapes of Landforms
+                          The Shapes of Crystals
                         </h4>
                         <p className="font-poppins text-[14px] md:text-[15px] text-secondary">
-                          Learn how mountains, rivers, and valleys form over time.
+                          Explore geometric crystal structures and learn why minerals grow into unique shapes.
                         </p>
                       </div>
                     </div>
@@ -567,10 +567,10 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                       </div>
                       <div className="flex-1">
                         <h4 className="font-poppins font-semibold text-[15px] md:text-[16px] text-foreground mb-1">
-                          Speleology
+                          How to Find Fossils
                         </h4>
                         <p className="font-poppins text-[14px] md:text-[15px] text-secondary">
-                          Discover the science of caves and underground formations.
+                          Learn where fossils form, how to spot them, and what clues they reveal.
                         </p>
                       </div>
                     </div>
@@ -584,10 +584,27 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                       </div>
                       <div className="flex-1">
                         <h4 className="font-poppins font-semibold text-[15px] md:text-[16px] text-foreground mb-1">
-                          Ask a Geologist
+                          Giants of the Past
                         </h4>
                         <p className="font-poppins text-[14px] md:text-[15px] text-secondary">
-                          Join a real time session with a geologist and explore your questions.
+                          Meet enormous prehistoric creatures like titanoboa, deinosuchus, and more.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Week 5 */}
+                    <div className="flex gap-4">
+                      <div className="flex-shrink-0 w-20">
+                        <span className="font-poppins font-semibold text-[15px] text-primary">
+                          Week 5
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-poppins font-semibold text-[15px] md:text-[16px] text-foreground mb-1">
+                          Prehistoric Wildlife
+                        </h4>
+                        <p className="font-poppins text-[14px] md:text-[15px] text-secondary">
+                          Discover extraordinary animals that roamed Earth long before humans.
                         </p>
                       </div>
                     </div>
