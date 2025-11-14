@@ -14,6 +14,47 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isScheduleExpanded, setIsScheduleExpanded] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
+
+  const handleCTAClick = () => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'Geology_onboarding_hero_click',
+      element_type: 'button',
+      element_text: 'Try for Free',
+      page_section: 'hero'
+    });
+    onContinue();
+  };
+
+  const handleVideoPlay = () => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'Geology_onboarding_video_play',
+      element_type: 'video',
+      video_title: 'Class Preview Video'
+    });
+    setShowVideo(true);
+  };
+
+  const handleLearnMoreToggle = () => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: isExpanded ? 'Geology_onboarding_learn_more_collapse' : 'Geology_onboarding_learn_more_expand',
+      element_type: 'toggle',
+      element_text: 'Learn More'
+    });
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleScheduleToggle = () => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: isScheduleExpanded ? 'Geology_onboarding_schedule_collapse' : 'Geology_onboarding_schedule_expand',
+      element_type: 'toggle',
+      element_text: 'See Full Schedule'
+    });
+    setIsScheduleExpanded(!isScheduleExpanded);
+  };
   
   return (
     <div className="min-h-screen bg-background relative">
