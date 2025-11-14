@@ -3,7 +3,7 @@ export const contentSchema = {
   logoSrc: "/src/assets/coral-academy-logo.png",
   q1: {
     title: "How soon are you looking to try our free classes?",
-    subtext: "Let your child explore the world of reptiles and amphibians",
+    subtext: "Let your child explore the world of rocks & fossils",
     options: [
       "Right away",
       "In 1–2 weeks",
