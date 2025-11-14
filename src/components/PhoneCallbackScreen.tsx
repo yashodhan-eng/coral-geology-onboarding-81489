@@ -108,6 +108,7 @@ export const PhoneCallbackScreen = ({
             window.dataLayer.push({
               event: 'Geology_onboarding_recaptcha_complete'
             });
+            if (window.clarity) window.clarity('event', 'Geology_onboarding_recaptcha_complete');
             setRecaptchaToken(token);
             setError(null);
           },
@@ -148,6 +149,7 @@ export const PhoneCallbackScreen = ({
             window.dataLayer.push({
               event: 'Geology_onboarding_phone_skip'
             });
+            if (window.clarity) window.clarity('event', 'Geology_onboarding_phone_skip');
             onSubmit("", undefined, undefined, freshToken);
             return;
           }
@@ -158,6 +160,7 @@ export const PhoneCallbackScreen = ({
             has_preferred_day: !!preferredDay,
             has_preferred_time: !!preferredTime
           });
+          if (window.clarity) window.clarity('event', 'Geology_onboarding_phone_submit');
           onSubmit(phone, preferredDay, preferredTime, freshToken);
           return;
         } else {
@@ -217,6 +220,7 @@ export const PhoneCallbackScreen = ({
                       window.dataLayer.push({
                         event: 'Geology_onboarding_phone_input_start'
                       });
+                      if (window.clarity) window.clarity('event', 'Geology_onboarding_phone_input_start');
                     }
                     setPhone(value || "");
                   }}
@@ -244,6 +248,7 @@ export const PhoneCallbackScreen = ({
                         event: 'Geology_onboarding_preferred_day_select',
                         selected_day: value
                       });
+                      if (window.clarity) window.clarity('event', 'Geology_onboarding_preferred_day_select');
                       setPreferredDay(value);
                     }}>
                       <SelectTrigger id="preferred-day">
@@ -269,6 +274,7 @@ export const PhoneCallbackScreen = ({
                         event: 'Geology_onboarding_preferred_time_select',
                         selected_time: value
                       });
+                      if (window.clarity) window.clarity('event', 'Geology_onboarding_preferred_time_select');
                       setPreferredTime(value);
                     }}>
                       <SelectTrigger id="preferred-time">

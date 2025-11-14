@@ -23,12 +23,14 @@ export const MultiSelectScreen = ({
 
   const toggleOption = (option: string) => {
     const isCurrentlySelected = selectedOptions.includes(option);
+    const eventName = isCurrentlySelected ? 'Geology_onboarding_multiselect_deselect' : 'Geology_onboarding_multiselect_select';
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
-      event: isCurrentlySelected ? 'Geology_onboarding_multiselect_deselect' : 'Geology_onboarding_multiselect_select',
+      event: eventName,
       step: step,
       option: option
     });
+    if (window.clarity) window.clarity('event', eventName);
     setSelectedOptions(prev => 
       prev.includes(option) 
         ? prev.filter(o => o !== option)
@@ -45,6 +47,7 @@ export const MultiSelectScreen = ({
         selected_options: selectedOptions,
         selection_count: selectedOptions.length
       });
+      if (window.clarity) window.clarity('event', 'Geology_onboarding_multiselect_submit');
       onSubmit(selectedOptions);
     }
   };
@@ -59,6 +62,7 @@ export const MultiSelectScreen = ({
               event: 'Geology_onboarding_back_button',
               step: step
             });
+            if (window.clarity) window.clarity('event', 'Geology_onboarding_back_button');
             onBack();
           }}
           className="fixed top-[3.75rem] left-4 z-10 p-2 rounded-full hover:bg-accent transition-colors"

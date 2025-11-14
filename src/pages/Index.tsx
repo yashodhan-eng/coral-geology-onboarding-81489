@@ -11,6 +11,7 @@ import { contentSchema, OnboardingAnswers } from "@/data/contentSchema";
 import { adCampaignService } from "@/lib/api";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useScrollTracking } from "@/hooks/useScrollTracking";
 import q1Hero from "@/assets/mbs-hero.jpg";
 import screen2Hero from "@/assets/mbs-hero-2.jpg";
 import screen4Hero from "@/assets/mbs-hero-3.jpg";
@@ -53,6 +54,9 @@ const Index = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState('');
   const [trackingParams, setTrackingParams] = useState({ source: '', referrerId: '' });
+  
+  // Enable scroll tracking
+  useScrollTracking();
 
   // Clear storage and start fresh for preview, capture tracking params
   useEffect(() => {
@@ -76,6 +80,7 @@ const Index = () => {
       page_url: window.location.href,
       source: urlParams.get('source') || 'meta_ads'
     });
+    if (window.clarity) window.clarity('event', 'Geology_onboarding_page_view');
   }, []);
 
   // Save answers to localStorage whenever they change
@@ -98,6 +103,7 @@ const Index = () => {
       question_key: questionKey,
       answer: value
     });
+    if (window.clarity) window.clarity('event', 'Geology_onboarding_step_complete');
     
     // Auto-advance after a brief delay for visual feedback
     setTimeout(() => {
@@ -119,6 +125,7 @@ const Index = () => {
       selected_count: values.length,
       answers: values
     });
+    if (window.clarity) window.clarity('event', 'Geology_onboarding_step_complete');
     
     // Auto-advance after a brief delay for visual feedback
     setTimeout(() => {
@@ -141,6 +148,7 @@ const Index = () => {
       step: currentStep,
       step_type: 'name_input'
     });
+    if (window.clarity) window.clarity('event', 'Geology_onboarding_step_complete');
     
     setCurrentStep(4);
   };
@@ -159,6 +167,7 @@ const Index = () => {
       step: currentStep,
       step_type: 'email_input'
     });
+    if (window.clarity) window.clarity('event', 'Geology_onboarding_step_complete');
     
     setCurrentStep(5);
   };
@@ -188,6 +197,7 @@ const Index = () => {
       has_preferred_day: !!preferredDay,
       has_preferred_time: !!preferredTime
     });
+    if (window.clarity) window.clarity('event', 'Geology_onboarding_form_complete');
     
     try {
       await submitToBackend(finalAnswers, recaptchaToken);
