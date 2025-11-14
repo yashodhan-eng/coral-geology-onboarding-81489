@@ -66,6 +66,64 @@ export const PhoneCallbackScreen = ({
   const recaptchaWidgetId = useRef<number | null>(null);
   const recaptchaContainerRef = useRef<HTMLDivElement>(null);
 
+  const handleRecaptchaCallback = (token: string) => {
+    console.log('reCAPTCHA token received:', token ? `${token.substring(0, 20)}...` : 'null');
+    setRecaptchaToken(token);
+    setError(null);
+    
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_recaptcha_complete',
+      element_type: 'recaptcha',
+      step_number: step
+    });
+  };
+
+  const handlePhoneChange = (value: string | undefined) => {
+    setPhone(value || "");
+    if (value) {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: 'Geology_onboarding_phone_input',
+        element_type: 'phone_input',
+        step_number: step
+      });
+    }
+  };
+
+  const handleDayChange = (value: string) => {
+    setPreferredDay(value);
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_preferred_day_select',
+      element_type: 'select',
+      step_number: step,
+      selected_value: value
+    });
+  };
+
+  const handleTimeChange = (value: string) => {
+    setPreferredTime(value);
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_preferred_time_select',
+      element_type: 'select',
+      step_number: step,
+      selected_value: value
+    });
+  };
+
+  const handleBackClick = () => {
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_back_button',
+      element_type: 'button',
+      step_number: step,
+      page_section: 'phone_callback_screen'
+    });
+    onBack();
+  };
+
   // Load reCAPTCHA script immediately
   useEffect(() => {
     if (!recaptchaLoaded) {
@@ -134,6 +192,19 @@ export const PhoneCallbackScreen = ({
         if (freshToken) {
           console.log('Using fresh reCAPTCHA token for submission');
           setError(null);
+          
+          // Track submission
+          (window as any).dataLayer = (window as any).dataLayer || [];
+          (window as any).dataLayer.push({
+            event: phone ? 'Geology_onboarding_phone_submit' : 'Geology_onboarding_phone_skip',
+            element_type: 'button',
+            step_number: step,
+            has_phone: !!phone,
+            has_preferred_day: !!preferredDay,
+            has_preferred_time: !!preferredTime,
+            button_text: phone ? buttonFilled : buttonEmpty
+          });
+          
           // Allow skipping if no phone entered
           if (!phone) {
             onSubmit("", undefined, undefined, freshToken);
@@ -193,7 +264,7 @@ export const PhoneCallbackScreen = ({
                   international
                   defaultCountry="US"
                   value={phone}
-                  onChange={(value) => setPhone(value || "")}
+                  onChange={handlePhoneChange}
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
                   placeholder={label}
                 />
@@ -212,7 +283,7 @@ export const PhoneCallbackScreen = ({
                     <Label htmlFor="preferred-day" className="text-sm font-medium text-foreground">
                       {dayLabel}
                     </Label>
-                    <Select value={preferredDay} onValueChange={setPreferredDay}>
+                    <Select value={preferredDay} onValueChange={handleDayChange}>
                       <SelectTrigger id="preferred-day">
                         <SelectValue placeholder="Select a day" />
                       </SelectTrigger>
@@ -230,7 +301,7 @@ export const PhoneCallbackScreen = ({
                     <Label htmlFor="preferred-time" className="text-sm font-medium text-foreground">
                       {timeLabel}
                     </Label>
-                    <Select value={preferredTime} onValueChange={setPreferredTime}>
+                    <Select value={preferredTime} onValueChange={handleTimeChange}>
                       <SelectTrigger id="preferred-time">
                         <SelectValue placeholder="Select a time" />
                       </SelectTrigger>
