@@ -58,6 +58,7 @@ export const InputScreen = ({
       input_type: type,
       field_label: label
     });
+    if (window.clarity) window.clarity('event', 'Geology_onboarding_input_submit');
     onSubmit(trimmedValue);
   };
 
@@ -95,6 +96,7 @@ export const InputScreen = ({
                 event: 'Geology_onboarding_back_button',
                 step: step
               });
+              if (window.clarity) window.clarity('event', 'Geology_onboarding_back_button');
               onBack();
             }}
             className="fixed top-[3.75rem] left-4 z-10 p-2 rounded-full hover:bg-accent transition-colors"
@@ -128,6 +130,7 @@ export const InputScreen = ({
                     input_type: type,
                     field_label: label
                   });
+                  if (window.clarity) window.clarity('event', 'Geology_onboarding_input_focus');
                 }}
                 onBlur={() => setTouched(true)}
                 className="h-12 md:h-13 text-sm md:text-base rounded-full px-5 bg-white border border-gray-300

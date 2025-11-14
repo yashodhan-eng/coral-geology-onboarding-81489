@@ -28,6 +28,7 @@ export const QuestionScreen = ({
               event: 'Geology_onboarding_back_button',
               step: step
             });
+            if (window.clarity) window.clarity('event', 'Geology_onboarding_back_button');
             onBack();
           }}
           className="fixed top-[3.75rem] left-4 z-10 p-2 rounded-full hover:bg-accent transition-colors"
@@ -61,6 +62,7 @@ export const QuestionScreen = ({
                   answer: option,
                   option_index: index
                 });
+                if (window.clarity) window.clarity('event', 'Geology_onboarding_question_answer');
                 onSelect(option, index);
               }}
               className="w-full h-auto min-h-[48px] md:min-h-[54px] py-3.5 md:py-4 px-4 md:px-5 text-sm md:text-base font-medium rounded-2xl

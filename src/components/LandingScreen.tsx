@@ -339,6 +339,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                     event: 'Geology_onboarding_hero_click',
                     button_location: 'hero_section'
                   });
+                  if (window.clarity) window.clarity('event', 'Geology_onboarding_hero_click');
                   onContinue();
                 }}
                 className="h-[46px] md:h-[52px] px-10 md:px-12 font-poppins font-semibold text-[15px] 
@@ -515,10 +516,12 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                 {/* Header - Always Visible */}
                 <button
                   onClick={() => {
+                    const eventName = isScheduleExpanded ? 'Geology_onboarding_schedule_collapse' : 'Geology_onboarding_schedule_expand';
                     window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
-                      event: isScheduleExpanded ? 'Geology_onboarding_schedule_collapse' : 'Geology_onboarding_schedule_expand'
+                      event: eventName
                     });
+                    if (window.clarity) window.clarity('event', eventName);
                     setIsScheduleExpanded(!isScheduleExpanded);
                   }}
                   className="w-full p-5 md:p-6 flex items-center justify-between hover:bg-background/50 transition-colors"
@@ -644,6 +647,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                 window.dataLayer.push({
                   event: 'Geology_onboarding_video_play'
                 });
+                if (window.clarity) window.clarity('event', 'Geology_onboarding_video_play');
                 setShowVideo(true);
               }}>
                 <img 
@@ -682,6 +686,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                     event: 'Geology_onboarding_hero_click',
                     button_location: 'bottom_section'
                   });
+                  if (window.clarity) window.clarity('event', 'Geology_onboarding_hero_click');
                   onContinue();
                 }}
                 className="h-[50px] md:h-[52px] px-10 md:px-12 font-poppins font-semibold text-[15px] 
