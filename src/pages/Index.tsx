@@ -52,14 +52,22 @@ const Index = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState('');
+  const [trackingParams, setTrackingParams] = useState({ source: '', referrerId: '' });
 
-  // Clear storage and start fresh for preview
+  // Clear storage and start fresh for preview, capture tracking params
   useEffect(() => {
     localStorage.removeItem(SUBMISSION_KEY);
     localStorage.removeItem(STORAGE_KEY);
     setCurrentStep(0);
     setAnswers({});
     setIsSubmitted(false);
+    
+    // Capture tracking parameters from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    setTrackingParams({
+      source: urlParams.get('source') || 'meta_ads',
+      referrerId: urlParams.get('referrerId') || ''
+    });
   }, []);
 
   // Save answers to localStorage whenever they change
@@ -128,20 +136,34 @@ const Index = () => {
       await submitToBackend(finalAnswers, recaptchaToken);
       const response = await adCampaignService.signin({ email: finalAnswers.email, recaptchaToken });
       console.log('Signin response:', response);
-      const navlink = response.magicLink || response.magic_link;
-      if (navlink) {
-        setIsSubmitting(false);
-        setIsSubmitted(true);
-        setRedirectUrl('https://www.coralacademy.com/class/geologybyamalia-047f95a1-a506-421b-8f13-a986ac1eb225');
-        console.log('Redirecting to:', 'https://www.coralacademy.com/class/geologybyamalia-047f95a1-a506-421b-8f13-a986ac1eb225');
-        return;
-      }
-      if (!response.success) {
-        setIsSubmitting(false);
-        let errorMessage = 'Registration failed. Please try again.';
-        toast.error(errorMessage);
-      }
+      
+      // Build redirect URL with all query parameters
+      const classId = 'geologybyamalia-047f95a1-a506-421b-8f13-a986ac1eb225';
+      const redirectToUrl = `https://www.coralacademy.com/class/${classId}`;
+      
+      const queryParams = new URLSearchParams({
+        name: finalAnswers.name || '',
+        email: finalAnswers.email || '',
+        source: trackingParams.source,
+        ...(trackingParams.referrerId && { referrerId: trackingParams.referrerId }),
+        ...(finalAnswers.q1 && { how_soon: mapHowSoon(finalAnswers.q1) }),
+        ...(finalAnswers.q2 && { preferred_topics: mapSchoolingMode(finalAnswers.q2) }),
+        ...(phone && { phone_number: phone }),
+        ...(preferredDay && { preferred_day: preferredDay }),
+        ...(preferredTime && { preferred_time: preferredTime }),
+        landing_variant: 'GeologyLanding',
+        class_id: classId,
+        redirectTo: redirectToUrl,
+        ...(recaptchaToken && { recaptchaToken }),
+        landing_secret: 'ca_landing_2025_3xD9pQ1Z'
+      }).toString();
+      
+      const finalRedirectUrl = `https://coralacademy.com/thank-you-landing?${queryParams}`;
+      
+      setIsSubmitting(false);
       setIsSubmitted(true);
+      setRedirectUrl(finalRedirectUrl);
+      console.log('Redirecting to:', finalRedirectUrl);
       
     } catch (error: any) {
       setIsSubmitting(false);
