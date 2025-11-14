@@ -102,11 +102,7 @@ export const PhoneCallbackScreen = ({
         // Render new widget
         const widgetId = window.grecaptcha.render(recaptchaContainerRef.current, {
           sitekey: siteKey,
-          callback: (token: string) => {
-            console.log('reCAPTCHA token received:', token ? `${token.substring(0, 20)}...` : 'null');
-            setRecaptchaToken(token);
-            setError(null);
-          },
+          callback: handleRecaptchaCallback,
           'error-callback': () => {
             console.error('reCAPTCHA error callback triggered');
             setRecaptchaToken(null);
