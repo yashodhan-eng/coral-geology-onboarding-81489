@@ -36,11 +36,13 @@ export const contentSchema = {
     button: "Next"
   },
   phone: {
-    title: "Would you like a callback?",
+    title: "Prefer speaking to a specialist?",
+    subtext: "We know this can feel overwhelming — let us help you 💛",
     label: "Enter your phone number",
-    dayLabel: "Preferred day",
-    timeLabel: "Preferred time",
-    buttonEmpty: "Skip and Submit",
+    helperText: "No spam. We'll only call when you prefer.",
+    dayLabel: "Preferred Day",
+    timeLabel: "Preferred Time",
+    buttonEmpty: "Skip & Submit",
     buttonFilled: "Submit",
     dayOptions: [
       "Weekday",

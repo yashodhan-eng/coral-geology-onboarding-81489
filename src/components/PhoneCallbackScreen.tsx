@@ -26,7 +26,9 @@ declare global {
 interface PhoneCallbackScreenProps {
   step: number;
   title: string;
+  subtext?: string;
   label: string;
+  helperText?: string;
   dayLabel: string;
   timeLabel: string;
   buttonEmpty: string;
@@ -41,7 +43,9 @@ interface PhoneCallbackScreenProps {
 export const PhoneCallbackScreen = ({
   step,
   title,
+  subtext,
   label,
+  helperText,
   dayLabel,
   timeLabel,
   buttonEmpty,
@@ -175,9 +179,14 @@ export const PhoneCallbackScreen = ({
       <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 mt-4 md:mt-6">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-6">
+            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2">
               {title}
             </h2>
+            {subtext && (
+              <p className="text-sm text-muted-foreground mb-6">
+                {subtext}
+              </p>
+            )}
 
             <div className="space-y-2">
               <Label htmlFor="phone" className="text-sm font-medium text-foreground">
@@ -193,6 +202,11 @@ export const PhoneCallbackScreen = ({
                   placeholder={label}
                 />
               </div>
+              {helperText && (
+                <p className="text-xs text-muted-foreground mt-1">
+                  {helperText}
+                </p>
+              )}
             </div>
 
             {hasPhone && (
