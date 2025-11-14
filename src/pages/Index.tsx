@@ -132,10 +132,8 @@ const Index = () => {
       if (navlink) {
         setIsSubmitting(false);
         setIsSubmitted(true);
-        // window.location.href = navlink;
-        contentSchema.redirectUrl = navlink;
-        setRedirectUrl(navlink);
-        console.log('Redirecting to:', contentSchema.redirectUrl);
+        setRedirectUrl('https://www.coralacademy.com/class/geologybyamalia-047f95a1-a506-421b-8f13-a986ac1eb225');
+        console.log('Redirecting to:', 'https://www.coralacademy.com/class/geologybyamalia-047f95a1-a506-421b-8f13-a986ac1eb225');
         return;
       }
       if (!response.success) {
