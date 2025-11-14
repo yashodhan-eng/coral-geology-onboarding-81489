@@ -338,7 +338,7 @@ export const PhoneCallbackScreen = ({
             <Button
               type="button"
               variant="ghost"
-              onClick={onBack}
+              onClick={handleBackClick}
               className="flex items-center gap-2"
             >
               <ArrowLeft className="w-4 h-4" />
