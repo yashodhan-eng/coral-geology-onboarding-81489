@@ -68,6 +68,14 @@ const Index = () => {
       source: urlParams.get('source') || 'meta_ads',
       referrerId: urlParams.get('referrerId') || ''
     });
+    
+    // Track page view
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'Geology_onboarding_page_view',
+      page_url: window.location.href,
+      source: urlParams.get('source') || 'meta_ads'
+    });
   }, []);
 
   // Save answers to localStorage whenever they change
@@ -81,6 +89,16 @@ const Index = () => {
     const newAnswers = { ...answers, [questionKey]: value };
     setAnswers(newAnswers);
     
+    // Track step completion
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'Geology_onboarding_step_complete',
+      step: currentStep,
+      step_type: 'question',
+      question_key: questionKey,
+      answer: value
+    });
+    
     // Auto-advance after a brief delay for visual feedback
     setTimeout(() => {
       setCurrentStep(prev => prev + 1);
@@ -90,6 +108,17 @@ const Index = () => {
   const handleMultiSelect = (questionKey: string, values: string[]) => {
     const newAnswers = { ...answers, [questionKey]: values.join(', ') };
     setAnswers(newAnswers);
+    
+    // Track step completion
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'Geology_onboarding_step_complete',
+      step: currentStep,
+      step_type: 'multiselect',
+      question_key: questionKey,
+      selected_count: values.length,
+      answers: values
+    });
     
     // Auto-advance after a brief delay for visual feedback
     setTimeout(() => {
@@ -104,6 +133,15 @@ const Index = () => {
   const handleNameSubmit = (name: string) => {
     const newAnswers = { ...answers, name };
     setAnswers(newAnswers);
+    
+    // Track step completion
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'Geology_onboarding_step_complete',
+      step: currentStep,
+      step_type: 'name_input'
+    });
+    
     setCurrentStep(4);
   };
 
@@ -113,6 +151,15 @@ const Index = () => {
       email
     };
     setAnswers(newAnswers);
+    
+    // Track step completion
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'Geology_onboarding_step_complete',
+      step: currentStep,
+      step_type: 'email_input'
+    });
+    
     setCurrentStep(5);
   };
 
@@ -132,6 +179,16 @@ const Index = () => {
     
     // Submit to backend API
     setIsSubmitting(true);
+    
+    // Track form completion
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'Geology_onboarding_form_complete',
+      has_phone: !!phone,
+      has_preferred_day: !!preferredDay,
+      has_preferred_time: !!preferredTime
+    });
+    
     try {
       await submitToBackend(finalAnswers, recaptchaToken);
       const response = await adCampaignService.signin({ email: finalAnswers.email, recaptchaToken });

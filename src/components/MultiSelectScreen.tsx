@@ -22,6 +22,13 @@ export const MultiSelectScreen = ({
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const toggleOption = (option: string) => {
+    const isCurrentlySelected = selectedOptions.includes(option);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: isCurrentlySelected ? 'Geology_onboarding_multiselect_deselect' : 'Geology_onboarding_multiselect_select',
+      step: step,
+      option: option
+    });
     setSelectedOptions(prev => 
       prev.includes(option) 
         ? prev.filter(o => o !== option)
@@ -31,6 +38,13 @@ export const MultiSelectScreen = ({
 
   const handleSubmit = () => {
     if (selectedOptions.length > 0) {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'Geology_onboarding_multiselect_submit',
+        step: step,
+        selected_options: selectedOptions,
+        selection_count: selectedOptions.length
+      });
       onSubmit(selectedOptions);
     }
   };
@@ -39,7 +53,14 @@ export const MultiSelectScreen = ({
     <div className="flex flex-col items-center justify-start min-h-[50vh] px-4 animate-fade-in pt-2">
       {onBack && (
         <button
-          onClick={onBack}
+          onClick={() => {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: 'Geology_onboarding_back_button',
+              step: step
+            });
+            onBack();
+          }}
           className="fixed top-[3.75rem] left-4 z-10 p-2 rounded-full hover:bg-accent transition-colors"
           aria-label="Go back"
         >

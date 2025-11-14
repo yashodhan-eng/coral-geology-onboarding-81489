@@ -51,6 +51,13 @@ export const InputScreen = ({
     }
 
     setError(null);
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'Geology_onboarding_input_submit',
+      step: step,
+      input_type: type,
+      field_label: label
+    });
     onSubmit(trimmedValue);
   };
 
@@ -82,7 +89,14 @@ export const InputScreen = ({
       <div className="flex flex-col items-center justify-center px-4">
         {onBack && (
           <button
-            onClick={onBack}
+            onClick={() => {
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({
+                event: 'Geology_onboarding_back_button',
+                step: step
+              });
+              onBack();
+            }}
             className="fixed top-[3.75rem] left-4 z-10 p-2 rounded-full hover:bg-accent transition-colors"
             aria-label="Go back"
           >
@@ -106,6 +120,15 @@ export const InputScreen = ({
                 type={type}
                 value={value}
                 onChange={handleChange}
+                onFocus={() => {
+                  window.dataLayer = window.dataLayer || [];
+                  window.dataLayer.push({
+                    event: 'Geology_onboarding_input_focus',
+                    step: step,
+                    input_type: type,
+                    field_label: label
+                  });
+                }}
                 onBlur={() => setTouched(true)}
                 className="h-12 md:h-13 text-sm md:text-base rounded-full px-5 bg-white border border-gray-300
                          focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"

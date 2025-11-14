@@ -22,7 +22,14 @@ export const QuestionScreen = ({
     <div className="flex flex-col items-center justify-start min-h-[50vh] px-4 animate-fade-in pt-2">
       {onBack && (
         <button
-          onClick={onBack}
+          onClick={() => {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: 'Geology_onboarding_back_button',
+              step: step
+            });
+            onBack();
+          }}
           className="fixed top-[3.75rem] left-4 z-10 p-2 rounded-full hover:bg-accent transition-colors"
           aria-label="Go back"
         >
@@ -45,7 +52,17 @@ export const QuestionScreen = ({
           {options.map((option, index) => (
             <Button
               key={index}
-              onClick={() => onSelect(option, index)}
+              onClick={() => {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                  event: 'Geology_onboarding_question_answer',
+                  step: step,
+                  question: title,
+                  answer: option,
+                  option_index: index
+                });
+                onSelect(option, index);
+              }}
               className="w-full h-auto min-h-[48px] md:min-h-[54px] py-3.5 md:py-4 px-4 md:px-5 text-sm md:text-base font-medium rounded-2xl
                        bg-card text-foreground border-2 border-border 
                        shadow-sm hover:shadow-lg hover:scale-[1.02] hover:border-primary/50
