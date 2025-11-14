@@ -330,10 +330,22 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
               </Carousel>
             </div>
 
-            {/* Schedule Line */}
-            <div className="text-center mb-3 md:mb-5">
-              <p className="font-inter text-[13px] md:text-[15px] text-accent italic font-medium">
-                Classes every Thursday at 5:00 PM PST.
+            {/* Schedule Block */}
+            <div className="text-center mb-3 md:mb-5 px-4">
+              <div className="inline-flex flex-col sm:flex-row gap-2 sm:gap-4 items-center justify-center w-full max-w-2xl mx-auto">
+                <div className="bg-primary/10 border border-primary/20 rounded-lg px-4 py-2.5 w-full sm:w-auto sm:flex-1 backdrop-blur-sm">
+                  <p className="font-inter text-[13px] md:text-[14px] text-primary font-semibold">
+                    Mondays at 3:00 PM PST
+                  </p>
+                </div>
+                <div className="bg-primary/10 border border-primary/20 rounded-lg px-4 py-2.5 w-full sm:w-auto sm:flex-1 backdrop-blur-sm">
+                  <p className="font-inter text-[13px] md:text-[14px] text-primary font-semibold">
+                    Tuesdays at 1:00 PM PST
+                  </p>
+                </div>
+              </div>
+              <p className="font-inter text-[11px] md:text-[12px] text-muted-foreground mt-2 italic">
+                Weekly Batches
               </p>
             </div>
 
