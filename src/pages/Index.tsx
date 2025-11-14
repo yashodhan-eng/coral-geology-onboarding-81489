@@ -68,6 +68,16 @@ const Index = () => {
       source: urlParams.get('source') || 'meta_ads',
       referrerId: urlParams.get('referrerId') || ''
     });
+
+    // Track initial page view
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_page_view',
+      page_title: 'Geology Onboarding',
+      page_path: window.location.pathname,
+      source: urlParams.get('source') || 'meta_ads',
+      referrerId: urlParams.get('referrerId') || ''
+    });
   }, []);
 
   // Save answers to localStorage whenever they change
@@ -81,6 +91,16 @@ const Index = () => {
     const newAnswers = { ...answers, [questionKey]: value };
     setAnswers(newAnswers);
     
+    // Track step progression
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_step_complete',
+      step_number: currentStep,
+      step_type: 'question',
+      question_key: questionKey,
+      answer: value
+    });
+    
     // Auto-advance after a brief delay for visual feedback
     setTimeout(() => {
       setCurrentStep(prev => prev + 1);
@@ -90,6 +110,17 @@ const Index = () => {
   const handleMultiSelect = (questionKey: string, values: string[]) => {
     const newAnswers = { ...answers, [questionKey]: values.join(', ') };
     setAnswers(newAnswers);
+    
+    // Track step progression
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_step_complete',
+      step_number: currentStep,
+      step_type: 'multiselect',
+      question_key: questionKey,
+      answers: values.join(', '),
+      total_selected: values.length
+    });
     
     // Auto-advance after a brief delay for visual feedback
     setTimeout(() => {
