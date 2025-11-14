@@ -389,8 +389,8 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                     <CarouselItem className="pl-2 basis-full">
                       <div className="bg-white rounded-full border border-[#EDEDED] shadow-[0_2px_8px_rgba(0,0,0,0.05)] h-14 flex items-center justify-center gap-2 px-6">
                         <GraduationCap className="w-4 h-4 text-primary flex-shrink-0" strokeWidth={2} />
-                        <span className="font-poppins font-medium text-[13px] text-foreground whitespace-nowrap">
-                          Founded by a Stanford Alum & Mom
+                         <span className="font-poppins font-medium text-[13px] text-foreground whitespace-nowrap">
+                          Founded by a Stanford Alum & Parent
                         </span>
                       </div>
                     </CarouselItem>
@@ -435,8 +435,8 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                     <CarouselItem className="md:basis-1/3">
                       <div className="bg-white rounded-full border border-[#EDEDED] shadow-[0_2px_8px_rgba(0,0,0,0.05)] h-16 flex items-center justify-center gap-2 px-4 py-3 transition-all duration-200 hover:scale-[1.02] hover:shadow-[0_4px_16px_rgba(0,0,0,0.1)] mx-2">
                         <GraduationCap className="w-4 h-4 text-primary flex-shrink-0" strokeWidth={2} />
-                        <span className="font-poppins font-medium text-[12px] lg:text-[13px] text-foreground text-center leading-tight">
-                          Founded by a Stanford Alum & Mom
+                         <span className="font-poppins font-medium text-[12px] lg:text-[13px] text-foreground text-center leading-tight">
+                          Founded by a Stanford Alum & Parent
                         </span>
                       </div>
                     </CarouselItem>
