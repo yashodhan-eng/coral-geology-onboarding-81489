@@ -331,22 +331,15 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
             </div>
 
             {/* Schedule Block */}
-            <div className="text-center mb-3 md:mb-5 px-4">
-              <div className="inline-flex flex-col sm:flex-row gap-2 sm:gap-4 items-center justify-center w-full max-w-2xl mx-auto">
-                <div className="bg-primary/10 border border-primary/20 rounded-lg px-4 py-2.5 w-full sm:w-auto sm:flex-1 backdrop-blur-sm">
-                  <p className="font-inter text-[13px] md:text-[14px] text-primary font-semibold">
-                    Mondays at 3:00 PM PST
-                  </p>
-                </div>
-                <div className="bg-primary/10 border border-primary/20 rounded-lg px-4 py-2.5 w-full sm:w-auto sm:flex-1 backdrop-blur-sm">
-                  <p className="font-inter text-[13px] md:text-[14px] text-primary font-semibold">
-                    Tuesdays at 1:00 PM PST
-                  </p>
-                </div>
+            <div className="text-center mb-2.5 md:mb-4 px-4">
+              <div className="inline-block bg-primary/10 border border-primary/20 rounded-full px-4 md:px-5 py-2 md:py-2.5 backdrop-blur-sm">
+                <p className="font-inter text-[10px] md:text-[11px] text-muted-foreground uppercase tracking-wide mb-0.5">
+                  Weekly batches
+                </p>
+                <p className="font-inter text-[13px] md:text-[14px] text-primary font-semibold">
+                  Mon 3:00 PM PST · Tue 1:00 PM PST
+                </p>
               </div>
-              <p className="font-inter text-[11px] md:text-[12px] text-muted-foreground mt-2 italic">
-                Weekly Batches
-              </p>
             </div>
 
             {/* Feature Highlights Carousel */}
