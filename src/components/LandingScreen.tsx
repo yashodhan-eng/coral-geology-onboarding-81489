@@ -330,6 +330,23 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
               </Carousel>
             </div>
 
+            {/* CTA Button */}
+            <div className="flex justify-center mb-3 md:mb-5">
+              <button
+                onClick={onContinue}
+                className="h-[46px] md:h-[52px] px-10 md:px-12 font-poppins font-semibold text-[15px] 
+                         text-white rounded-full
+                         shadow-[0_3px_10px_rgba(240,90,38,0.25)] hover:shadow-[0_6px_20px_rgba(240,90,38,0.35)]
+                         hover:scale-[1.02] active:scale-[0.98] 
+                         transition-all duration-200"
+                style={{ 
+                  background: 'linear-gradient(180deg, #F46A37 0%, #E85522 100%)'
+                }}
+              >
+                 Try for Free
+              </button>
+            </div>
+
             {/* Schedule Block */}
             <div className="text-center mb-2.5 md:mb-4 px-4">
               <div className="inline-block bg-primary/10 border border-primary/20 rounded-full px-4 md:px-5 py-2 md:py-2.5 backdrop-blur-sm">
@@ -434,23 +451,6 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                   </CarouselContent>
                 </Carousel>
               </div>
-            </div>
-
-            {/* CTA Button */}
-            <div className="flex justify-center mb-8 md:mb-10">
-              <button
-                onClick={onContinue}
-                className="h-[46px] md:h-[52px] px-10 md:px-12 font-poppins font-semibold text-[15px] 
-                         text-white rounded-full
-                         shadow-[0_3px_10px_rgba(240,90,38,0.25)] hover:shadow-[0_6px_20px_rgba(240,90,38,0.35)]
-                         hover:scale-[1.02] active:scale-[0.98] 
-                         transition-all duration-200"
-                style={{ 
-                  background: 'linear-gradient(180deg, #F46A37 0%, #E85522 100%)'
-                }}
-              >
-                 Try for Free
-              </button>
             </div>
 
             {/* What Kids Learn Title */}
