@@ -104,6 +104,10 @@ export const PhoneCallbackScreen = ({
           sitekey: siteKey,
           callback: (token: string) => {
             console.log('reCAPTCHA token received:', token ? `${token.substring(0, 20)}...` : 'null');
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: 'Geology_onboarding_recaptcha_complete'
+            });
             setRecaptchaToken(token);
             setError(null);
           },
@@ -140,10 +144,20 @@ export const PhoneCallbackScreen = ({
           setError(null);
           // Allow skipping if no phone entered
           if (!phone) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: 'Geology_onboarding_phone_skip'
+            });
             onSubmit("", undefined, undefined, freshToken);
             return;
           }
           // Submit with phone and preferences
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'Geology_onboarding_phone_submit',
+            has_preferred_day: !!preferredDay,
+            has_preferred_time: !!preferredTime
+          });
           onSubmit(phone, preferredDay, preferredTime, freshToken);
           return;
         } else {
@@ -197,7 +211,15 @@ export const PhoneCallbackScreen = ({
                   international
                   defaultCountry="US"
                   value={phone}
-                  onChange={(value) => setPhone(value || "")}
+                  onChange={(value) => {
+                    if (value && !phone) {
+                      window.dataLayer = window.dataLayer || [];
+                      window.dataLayer.push({
+                        event: 'Geology_onboarding_phone_input_start'
+                      });
+                    }
+                    setPhone(value || "");
+                  }}
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
                   placeholder={label}
                 />
@@ -216,7 +238,14 @@ export const PhoneCallbackScreen = ({
                     <Label htmlFor="preferred-day" className="text-sm font-medium text-foreground">
                       {dayLabel}
                     </Label>
-                    <Select value={preferredDay} onValueChange={setPreferredDay}>
+                    <Select value={preferredDay} onValueChange={(value) => {
+                      window.dataLayer = window.dataLayer || [];
+                      window.dataLayer.push({
+                        event: 'Geology_onboarding_preferred_day_select',
+                        selected_day: value
+                      });
+                      setPreferredDay(value);
+                    }}>
                       <SelectTrigger id="preferred-day">
                         <SelectValue placeholder="Select a day" />
                       </SelectTrigger>
@@ -234,7 +263,14 @@ export const PhoneCallbackScreen = ({
                     <Label htmlFor="preferred-time" className="text-sm font-medium text-foreground">
                       {timeLabel}
                     </Label>
-                    <Select value={preferredTime} onValueChange={setPreferredTime}>
+                    <Select value={preferredTime} onValueChange={(value) => {
+                      window.dataLayer = window.dataLayer || [];
+                      window.dataLayer.push({
+                        event: 'Geology_onboarding_preferred_time_select',
+                        selected_time: value
+                      });
+                      setPreferredTime(value);
+                    }}>
                       <SelectTrigger id="preferred-time">
                         <SelectValue placeholder="Select a time" />
                       </SelectTrigger>
