@@ -135,6 +135,15 @@ const Index = () => {
   const handleNameSubmit = (name: string) => {
     const newAnswers = { ...answers, name };
     setAnswers(newAnswers);
+    
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_step_complete',
+      step_number: currentStep,
+      step_type: 'name_input',
+      has_value: true
+    });
+    
     setCurrentStep(4);
   };
 
@@ -144,6 +153,15 @@ const Index = () => {
       email
     };
     setAnswers(newAnswers);
+    
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      event: 'Geology_onboarding_step_complete',
+      step_number: currentStep,
+      step_type: 'email_input',
+      has_value: true
+    });
+    
     setCurrentStep(5);
   };
 
