@@ -374,7 +374,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
             {/* CTA Button */}
             <div className="flex justify-center mb-3 md:mb-5">
               <button
-                onClick={onContinue}
+                onClick={handleCTAClick}
                 className="h-[46px] md:h-[52px] px-10 md:px-12 font-poppins font-semibold text-[15px] 
                          text-white rounded-full
                          shadow-[0_3px_10px_rgba(240,90,38,0.25)] hover:shadow-[0_6px_20px_rgba(240,90,38,0.35)]
@@ -548,7 +548,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
               >
                 {/* Header - Always Visible */}
                 <button
-                  onClick={() => setIsScheduleExpanded(!isScheduleExpanded)}
+                  onClick={handleScheduleToggle}
                   className="w-full p-5 md:p-6 flex items-center justify-between hover:bg-background/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
@@ -667,7 +667,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
               </div>
 
               {/* Video Player */}
-              <div className="relative group cursor-pointer" onClick={() => setShowVideo(true)}>
+              <div className="relative group cursor-pointer" onClick={handleVideoPlay}>
                 <img 
                   src={heroImage} 
                   alt="Geology Adventures Class Preview" 
@@ -698,7 +698,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
             {/* CTA Button */}
             <div className="flex justify-center">
               <button
-                onClick={onContinue}
+                onClick={handleCTAClick}
                 className="h-[50px] md:h-[52px] px-10 md:px-12 font-poppins font-semibold text-[15px] 
                          text-white rounded-full
                          shadow-[0_3px_10px_rgba(240,90,38,0.25)] hover:shadow-[0_6px_20px_rgba(240,90,38,0.35)]
