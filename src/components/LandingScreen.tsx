@@ -16,8 +16,8 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
   const [showVideo, setShowVideo] = useState(false);
 
   const handleCTAClick = () => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
       event: 'Geology_onboarding_hero_click',
       element_type: 'button',
       element_text: 'Try for Free',
@@ -27,8 +27,8 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
   };
 
   const handleVideoPlay = () => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
       event: 'Geology_onboarding_video_play',
       element_type: 'video',
       video_title: 'Class Preview Video'
@@ -37,8 +37,8 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
   };
 
   const handleLearnMoreToggle = () => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
       event: isExpanded ? 'Geology_onboarding_learn_more_collapse' : 'Geology_onboarding_learn_more_expand',
       element_type: 'toggle',
       element_text: 'Learn More'
@@ -47,8 +47,8 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
   };
 
   const handleScheduleToggle = () => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
       event: isScheduleExpanded ? 'Geology_onboarding_schedule_collapse' : 'Geology_onboarding_schedule_expand',
       element_type: 'toggle',
       element_text: 'See Full Schedule'
