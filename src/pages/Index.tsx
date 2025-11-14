@@ -314,7 +314,9 @@ const Index = () => {
           <PhoneCallbackScreen
             step={5}
             title={contentSchema.phone.title}
+            subtext={contentSchema.phone.subtext}
             label={contentSchema.phone.label}
+            helperText={contentSchema.phone.helperText}
             dayLabel={contentSchema.phone.dayLabel}
             timeLabel={contentSchema.phone.timeLabel}
             buttonEmpty={contentSchema.phone.buttonEmpty}
