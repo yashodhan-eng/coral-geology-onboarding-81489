@@ -1,11 +1,12 @@
 import mixpanel from 'mixpanel-browser';
+import { config } from '@/config';
 
 let isInitialized = false;
 
 // Initialize Mixpanel
 export const initMixpanel = () => {
   console.log("initMixpanel")
-  const token = import.meta.env.VITE_MIXPANEL_TOKEN;
+  const token = config.mixpanelToken;
   
   if (!token) {
     console.warn('Mixpanel token not found. Tracking is disabled.');
@@ -14,7 +15,7 @@ export const initMixpanel = () => {
 
   try {
     mixpanel.init(token, {
-      debug: import.meta.env.DEV,
+      debug: config.appEnv === 'development',
       track_pageview: true, // Automatically track page views
       persistence: 'localStorage',
       ignore_dnt: true,
@@ -27,7 +28,7 @@ export const initMixpanel = () => {
         // Set default properties for all events
         mixpanel.register({
           app_name: 'Coral BizKid Landing',
-          environment: import.meta.env.MODE,
+          environment: config.appEnv,
         });
         // Force identify for local sessions (helps replay link sessions)
         mixpanel.identify(mixpanel.get_distinct_id());
