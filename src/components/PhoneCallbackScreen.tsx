@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft } from "lucide-react";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import { config } from "@/config";
 
 declare global {
   interface Window {
@@ -86,7 +87,7 @@ export const PhoneCallbackScreen = ({
       return;
     }
 
-    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
+    const siteKey = config.recaptchaSiteKey;
 
     window.grecaptcha.ready(() => {
       if (!recaptchaContainerRef.current) return;
