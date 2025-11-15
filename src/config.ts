@@ -1,7 +1,18 @@
+const isDevelopment = true;
+
 export const config = {
-  appEnv: import.meta.env.VITE_APP_ENV || 'development',
-  apiBaseUrl: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8787',
-  recaptchaSiteKey: import.meta.env.VITE_RECAPTCHA_SITE_KEY || '6Lcnpv4rAAAAAOGN8RszPxz9mpL94Ql4FersrRc7',
-  mixpanelToken: import.meta.env.VITE_MIXPANEL_TOKEN || 'c72bd1ecb2886bd2e9e755fb6e41acf3',
-  redirectBaseUrl: import.meta.env.VITE_REDIRECT_BASE_URL || 'https://preprod.coralacademy.com',
-} as const;
+  // Environment mode
+  appEnv: isDevelopment ? "development" : "production",
+
+  // API Base URL
+  apiBaseUrl: isDevelopment ? "http://api.preprod.coralacademy.com" : "https://api.coralacademy.com", // Update this with your production API URL
+
+  // reCAPTCHA Site Key (public key, safe to expose)
+  recaptchaSiteKey: "6Lcnpv4rAAAAAOGN8RszPxz9mpL94Ql4FersrRc7",
+
+  // Mixpanel Token (frontend token, safe to expose)
+  mixpanelToken: "c72bd1ecb2886bd2e9e755fb6e41acf3",
+
+  // Redirect Base URL
+  redirectBaseUrl: isDevelopment ? "https://preprod.coralacademy.com" : "https://www.coralacademy.com", // Update this with your production redirect URL
+};

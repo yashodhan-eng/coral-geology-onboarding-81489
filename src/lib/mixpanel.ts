@@ -21,12 +21,14 @@ export const initMixpanel = () => {
       record_sessions_percent: 100,
       record_idle_timeout_ms: 1800000,
       api_host: 'https://api.mixpanel.com',
+      record_heatmap_data: true,
+      autocapture: true,
       // Enable session recording for heatmaps (enable in Mixpanel dashboard settings)
       // Session recording must be enabled in your Mixpanel project settings
       loaded: (mixpanel) => {
         // Set default properties for all events
         mixpanel.register({
-          app_name: 'Coral BizKid Landing',
+          app_name: 'Coral geology onboarding',
           environment: import.meta.env.MODE,
         });
         // Force identify for local sessions (helps replay link sessions)
