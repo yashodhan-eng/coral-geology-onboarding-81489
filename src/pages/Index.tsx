@@ -16,6 +16,7 @@ import q1Hero from "@/assets/mbs-hero.jpg";
 import screen2Hero from "@/assets/mbs-hero-2.jpg";
 import screen4Hero from "@/assets/mbs-hero-3.jpg";
 import screen5Hero from "@/assets/mbs-hero-4.jpg";
+import { trackPageView, trackEvent, trackButtonClick, trackFormEvent, identifyUser } from "@/lib/mixpanel";
 
 const STORAGE_KEY = "coralOnboardingAnswers";
 const SUBMISSION_KEY = "coralOnboardingSubmission";
@@ -55,6 +56,26 @@ const Index = () => {
   const [redirectUrl, setRedirectUrl] = useState('');
   const [trackingParams, setTrackingParams] = useState({ source: '', referrerId: '' });
   
+   // Track page view on mount
+  useEffect(() => {
+    trackPageView("Home Page", {
+      page_path: window.location.pathname,
+      page_title: document.title,
+    });
+  }, []);
+
+  // Track step progression
+  useEffect(() => {
+    if (currentStep > 0) {
+      trackEvent("Step Viewed", {
+        step: currentStep,
+        total_steps: 4,
+        has_answers: Object.keys(answers).length > 0,
+      });
+    }
+  }, [currentStep]);
+
+
   // Enable scroll tracking
   useScrollTracking();
 
@@ -93,6 +114,15 @@ const Index = () => {
   const handleQuestionSelect = (questionKey: string, value: string) => {
     const newAnswers = { ...answers, [questionKey]: value };
     setAnswers(newAnswers);
+
+    // Track question selection
+    trackEvent("Question Answered", {
+      question_key: questionKey,
+      question_value: value,
+      step: currentStep,
+      total_answers: Object.keys(newAnswers).length,
+    });
+
     
     // Track step completion
     window.dataLayer = window.dataLayer || [];
@@ -115,6 +145,16 @@ const Index = () => {
     const newAnswers = { ...answers, [questionKey]: values.join(', ') };
     setAnswers(newAnswers);
     
+    // Track multi-select question
+    trackEvent("Question Answered", {
+      question_key: questionKey,
+      question_values: values,
+      question_value: values.join(', '),
+      step: currentStep,
+      total_answers: Object.keys(newAnswers).length,
+      selection_count: values.length,
+    });
+
     // Track step completion
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
@@ -140,6 +180,13 @@ const Index = () => {
   const handleNameSubmit = (name: string) => {
     const newAnswers = { ...answers, name };
     setAnswers(newAnswers);
+
+    // Track name submission
+    trackFormEvent("submitted", "name_form", {
+      step: 3,
+      field_name: "name",
+      has_name: !!name,
+    });
     
     // Track step completion
     window.dataLayer = window.dataLayer || [];
@@ -160,6 +207,14 @@ const Index = () => {
     };
     setAnswers(newAnswers);
     
+    // Track email form submission started
+    trackFormEvent("submitted", "email_form", {
+      step: 4,
+      field_name: "email",
+      has_email: !!email,
+      has_recaptcha: !!answers.recaptchaToken,
+    });
+
     // Track step completion
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
@@ -203,6 +258,7 @@ const Index = () => {
       await submitToBackend(finalAnswers, recaptchaToken);
       const response = await adCampaignService.signin({ email: finalAnswers.email, recaptchaToken });
       console.log('Signin response:', response);
+
       
       // Build redirect URL with all query parameters
       const classId = 'geologybyamalia-047f95a1-a506-421b-8f13-a986ac1eb225';
@@ -225,7 +281,22 @@ const Index = () => {
         landing_secret: 'ca_landing_2025_3xD9pQ1Z'
       }).toString();
       
-      const finalRedirectUrl = `https://coralacademy.com/thank-you-landing?${queryParams}`;
+      const finalRedirectUrl = import.meta.env.VITE_BASE_URL === 'development' ? `${import.meta.env.VITE_BASE_URL}/thank-you-landing?${queryParams}` : `https://coralacademy.com/thank-you-landing?${queryParams}`;
+
+      // Track successful signin
+        trackEvent("Signin Successful", {
+          email: finalAnswers.email,
+          user_id: response.user_id,
+          has_magic_link: true,
+        });
+        
+        // Track successful completion
+        trackEvent("Onboarding Completed", {
+          step: 4,
+          email: finalAnswers.email,
+          has_magic_link: true,
+          redirect_url: finalRedirectUrl,
+        });
       
       setIsSubmitting(false);
       setIsSubmitted(true);
