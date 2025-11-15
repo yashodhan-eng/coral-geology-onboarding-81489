@@ -17,6 +17,7 @@ import screen2Hero from "@/assets/mbs-hero-2.jpg";
 import screen4Hero from "@/assets/mbs-hero-3.jpg";
 import screen5Hero from "@/assets/mbs-hero-4.jpg";
 import { trackPageView, trackEvent, trackButtonClick, trackFormEvent, identifyUser } from "@/lib/mixpanel";
+import { config } from "@/config";
 
 const STORAGE_KEY = "coralOnboardingAnswers";
 const SUBMISSION_KEY = "coralOnboardingSubmission";
@@ -281,7 +282,9 @@ const Index = () => {
         landing_secret: 'ca_landing_2025_3xD9pQ1Z'
       }).toString();
       
-      const finalRedirectUrl = import.meta.env.VITE_BASE_URL === 'development' ? `${import.meta.env.VITE_BASE_URL}/thank-you-landing?${queryParams}` : `https://coralacademy.com/thank-you-landing?${queryParams}`;
+      const finalRedirectUrl = config.appEnv === 'development' 
+        ? `http://localhost:5173/thank-you-landing?${queryParams}` 
+        : `https://coralacademy.com/thank-you-landing?${queryParams}`;
 
       // Track successful signin
         trackEvent("Signin Successful", {
