@@ -1,4 +1,4 @@
-const isDevelopment = true;
+const isDevelopment = false;
 
 export const config = {
   // Environment mode
