@@ -257,8 +257,8 @@ const Index = () => {
     
     try {
       await submitToBackend(finalAnswers, recaptchaToken);
-      const response = await adCampaignService.signin({ email: finalAnswers.email, recaptchaToken });
-      console.log('Signin response:', response);
+      // const response = await adCampaignService.signin({ email: finalAnswers.email, recaptchaToken });
+      // console.log('Signin response:', response);
 
       
       // Build redirect URL with all query parameters
@@ -282,14 +282,16 @@ const Index = () => {
         landing_secret: 'ca_landing_2025_3xD9pQ1Z'
       }).toString();
       
-      const finalRedirectUrl = config.appEnv === 'development' 
-        ? `http://localhost:5173/thank-you-landing?${queryParams}` 
-        : `https://coralacademy.com/thank-you-landing?${queryParams}`;
+      // const finalRedirectUrl = config.appEnv === 'development' 
+      //   ? `http://localhost:5173/thank-you-landing?${queryParams}` 
+      //   : `https://coralacademy.com/thank-you-landing?${queryParams}`;
 
+      const redirectUrl = `${config.redirectBaseUrl}/thank-you-landing?name=${encodeURIComponent(finalAnswers.name || '')}&email=${encodeURIComponent(finalAnswers.email || '')}&source=${encodeURIComponent(trackingParams.source)}${trackingParams.referrerId ? `&referrerId=${encodeURIComponent(trackingParams.referrerId)}` : ''}${finalAnswers.q1 ? `&how_soon=${encodeURIComponent(mapHowSoon(finalAnswers.q1))}` : ''}${finalAnswers.q2 ? `&preferred_topics=${encodeURIComponent(mapSchoolingMode(finalAnswers.q2))}` : ''}${phone ? `&phone_number=${encodeURIComponent(phone)}` : ''}${preferredDay ? `&preferred_day=${encodeURIComponent(preferredDay)}` : ''}${preferredTime ? `&preferred_time=${encodeURIComponent(preferredTime)}` : ''}&landing_variant=GeologyLanding&class_id=${classId}&redirectTo=${encodeURIComponent(redirectToUrl)}&landing_secret=ca_landing_2025_3xD9pQ1Z${recaptchaToken ? `&recaptchaToken=${encodeURIComponent(recaptchaToken)}` : ''}`;
+      console.log('Final redirect URL:', redirectUrl);
       // Track successful signin
         trackEvent("Signin Successful", {
           email: finalAnswers.email,
-          user_id: response.user_id,
+          user_id: finalAnswers.email,
           has_magic_link: true,
         });
         
@@ -298,13 +300,19 @@ const Index = () => {
           step: 4,
           email: finalAnswers.email,
           has_magic_link: true,
-          redirect_url: finalRedirectUrl,
+          redirect_url: redirectUrl,
         });
       
       setIsSubmitting(false);
       setIsSubmitted(true);
-      setRedirectUrl(finalRedirectUrl);
-      console.log('Redirecting to:', finalRedirectUrl);
+      setRedirectUrl(redirectUrl);
+      console.log('Redirecting to:', redirectUrl);
+
+      setTimeout(() => {
+        
+        window.location.href = redirectUrl;
+      }, 2500);
+
       
     } catch (error: any) {
       setIsSubmitting(false);
@@ -323,6 +331,7 @@ const Index = () => {
 
   const submitToBackend = async (finalAnswers: OnboardingAnswers, recaptchaToken?: string | null) => {
     // Validate required fields before sending
+    console.log('Final answers before submission:', finalAnswers);
     if (!finalAnswers.name || !finalAnswers.email) {
       throw new Error('Name and email are required');
     }
@@ -334,24 +343,39 @@ const Index = () => {
     console.log('Submitting to backend with:', {
       name: finalAnswers.name,
       email: finalAnswers.email,
-      source: 'ITW_Quiz_Page',
+      source: 'coral_geology_onboarding',
       how_soon: finalAnswers.q1 ? mapHowSoon(finalAnswers.q1) : null,
       preferred_topics: finalAnswers.q2 ? mapSchoolingMode(finalAnswers.q2) : null,
       hasRecaptchaToken: !!recaptchaToken,
     });
 
-    const response = await adCampaignService.register({
-      name: finalAnswers.name,
-      email: finalAnswers.email,
-      source: 'ITW_Quiz_Page',
-      how_soon: finalAnswers.q1 ? mapHowSoon(finalAnswers.q1) : null,
-      preferred_topics: finalAnswers.q2 ? mapSchoolingMode(finalAnswers.q2) : null,
-      recaptchaToken: recaptchaToken,
-    });
+    // const response = await adCampaignService.register({
+    //   name: finalAnswers.name,
+    //   email: finalAnswers.email,
+    //   source: 'coral_geology_onboarding',
+    //   how_soon: finalAnswers.q1 ? mapHowSoon(finalAnswers.q1) : null,
+    //   preferred_topics: finalAnswers.q2 ? mapSchoolingMode(finalAnswers.q2) : null,
+    //   recaptchaToken: recaptchaToken,
+    // });
 
-    if (!response.success) {
-      throw new Error(response.error || 'Registration failed');
-    }
+    // Build redirect URL with query parameters
+        // const query = new URLSearchParams({
+        //   name: finalAnswers.name,
+        //     email: finalAnswers.email,
+        //   source: 'Landing_Explorer',
+        //   referrerId: trackingParams.referrerId,
+        //   landing_variant: "GeologyQuizLanding",
+        //   redirectTo: config.appEnv === 'development' ? "https://www.preprod.coralacademy.com/browse?utm_source=metaexplorer" : "https://www.coralacademy.com/browse?utm_source=metaexplorer",
+        //   recaptchaToken,
+        //   landing_secret: "ca_landing_2025_3xD9pQ1Z",
+        // }).toString();
+
+        // const redirecturl = `${config.redirectBaseUrl}/thank-you-landing?name=${encodeURIComponent(finalAnswers.name)}&email=${finalAnswers.email}&source=Landing_Explorer&referrerId=${encodeURIComponent(trackingParams.referrerId)}&landing_variant=GeologyQuizLanding&redirectTo=${config.appEnv === 'development' ? 'https://www.preprod.coralacademy.com/class/this-class-will-be-on-zoom-sdk-8f0e37aa-664c-400e-bb6f-3757b27b38e5' : 'https://www.coralacademy.com/class/geologybyamalia-047f95a1-a506-421b-8f13-a986ac1eb225'}&landing_secret=ca_landing_2025_3xD9pQ1Z&recaptchaToken=${encodeURIComponent(recaptchaToken)}`;
+        // console.log('Redirect URL:', redirecturl);
+      //   setTimeout(() => {
+
+      //   window.location.href = redirecturl;
+      // }, 2500);
   };
 
   if (isSubmitted && redirectUrl) {
