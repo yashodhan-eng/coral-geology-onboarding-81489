@@ -673,7 +673,7 @@ export const LandingScreen = ({ onContinue }: LandingScreenProps) => {
                   autoPlay
                   className="w-full h-full"
                 >
-                  <source src="/videos/Generic_-_Final_1.mp4" type="video/mp4" />
+                  <source src="/videos/geology_video.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </DialogContent>
